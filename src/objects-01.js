@@ -27,7 +27,15 @@
  *
  */
 function makePetObject() {
-  // write your code here & return value
+  const aPet = {
+    name: '',
+    age: 0,
+    species: '',
+    hasFur: false,
+    legs: 0,
+    bestFriend: '',
+  };
+  return aPet;
 }
 
 /**
@@ -39,7 +47,8 @@ function makePetObject() {
  * Mozilla - https://mzl.la/3iu0uh4
  */
 function getPetName(pet) {
-  // write your code here & return value
+  const aPet = makePetObject();
+  return aPet.name;
 }
 
 /**
@@ -52,7 +61,8 @@ function getPetName(pet) {
  */
 function getPetAge(pet) {
   // eslint-disable-next-line dot-notation
-  // write your code here & return value
+  const aPet = makePetObject();
+  return aPet['age'];
 }
 
 /**
@@ -69,7 +79,10 @@ function getPetAge(pet) {
  * permanently making a change to the passed object.
  */
 function setPetAge(pet, age) {
-  // write your code here & return value
+  let aPet = pet;
+  aPet = makePetObject();
+  pet.age = age;
+  return aPet;
 }
 
 /**
@@ -78,7 +91,12 @@ function setPetAge(pet, age) {
  * @returns {boolean} - true if the pet's age is < 1 , false otherwise
  */
 function isPetABaby(pet) {
-  // write your code here & return value
+  let aPet = pet;
+  aPet = makePetObject();
+  if (pet.age < 1) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -89,7 +107,10 @@ function isPetABaby(pet) {
  * breed must be the property name that is added
  */
 function addPetBreed(pet, str) {
-  // write your code here & return value
+  let aPet = pet;
+  aPet = makePetObject();
+  pet['breed'] = str;
+  return aPet;
 }
 
 /**
@@ -100,7 +121,10 @@ function addPetBreed(pet, str) {
  * Mozilla - https://mzl.la/3FmDpqv
  */
 function deletePetBestFriend(pet) {
-  // write your code here & return value
+  let aPet = pet;
+  aPet = makePetObject();
+  delete pet.bestFriend;
+  return pet;
 }
 
 /**
@@ -111,7 +135,9 @@ function deletePetBestFriend(pet) {
  * Mozilla - https://mzl.la/3ipqBW8
  */
 function getPetKeys(pet) {
-  // write your code here & return value
+  let aPet = pet;
+  aPet = makePetObject();
+  return Object.getOwnPropertyNames(aPet);
 }
 
 /**
@@ -121,7 +147,9 @@ function getPetKeys(pet) {
  * book - https://bit.ly/3uz2fOy
  */
 function getPetObjLength(pet) {
-  // write your code here & return value
+  let aPet = pet;
+  aPet = makePetObject();
+  return Object.keys(aPet).length;
 }
 
 module.exports = {

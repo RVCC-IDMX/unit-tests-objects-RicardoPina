@@ -62,7 +62,19 @@
  * then use the copied object like a lookup table
  */
 function getColorValue(color) {
-  // write your code here & return value
+  const colorCodes = {
+    black: 0,
+    brown: 1,
+    red: 2,
+    orange: 3,
+    yellow: 4,
+    green: 5,
+    blue: 6,
+    violet: 7,
+    grey: 8,
+    white: 9,
+  };
+  return colorCodes[color];
 }
 
 /**
@@ -79,7 +91,21 @@ function getColorValue(color) {
  * then use the copied object like a lookup table
  */
 function getMultiplierValue(color) {
-  // write your code here & return value
+  const multiplierCodes = {
+    black: 1,
+    brown: 10,
+    red: 100,
+    orange: 1000,
+    yellow: 10000,
+    green: 100000,
+    blue: 1000000,
+    violet: 10000000,
+    grey: 100000000,
+    white: 1000000000,
+    gold: 0.1,
+    silver: 0.01,
+  };
+  return multiplierCodes[color];
 }
 
 /**
@@ -106,7 +132,18 @@ function getMultiplierValue(color) {
  *
  */
 function getThreeBandValue(bands) {
-  // write your code here & return value
+  const givBands = {};
+  givBands.color1 = (getColorValue(bands.color1) * 10);
+  givBands.color2 = getColorValue(bands.color2);
+  givBands.multiplier = getMultiplierValue(bands.multiplier);
+  const resistance = (givBands.color1 + givBands.color2) * givBands.multiplier;
+  if (givBands.multiplier === getMultiplierValue('gold')) {
+    return Math.round(resistance * 10) / 10;
+  }
+  if (givBands.multiplier === getMultiplierValue('silver')) {
+    return +resistance.toFixed(2);
+  }
+  return resistance;
 }
 
 /**
@@ -126,12 +163,19 @@ function getThreeBandValue(bands) {
  * example: 2600000000 => 2.6G // G = 1 billion
  *
  *  Hint: I found a solution from stackoverflow
- * Be careful, if you copy older code make sure you replace var with
+ * Be careful, if you copy older code make sure you replace const with
  * either const or let
  *
  */
 function formatNumber(val) {
-  // write your code here & return value
+  if (val === 0) {
+    return '0';
+  }
+  const newholder = val.toPrecision(2).split('e');
+  const rawVal = newholder.length === 1 ? 0 : Math.floor(Math.min(newholder[1].slice(1), 14) / 3);
+  const preConcat = rawVal < 1 ? val.toFixed(0) : (val / 10 ** (rawVal * 3)).toFixed(1);
+  const newValue = Math.abs(preConcat) + ['', 'k', 'M', 'G', 'T'][rawVal];
+  return newValue;
 }
 
 /**
@@ -150,7 +194,18 @@ function formatNumber(val) {
  * example: 'green' => '±0.5%'
  */
 function getTolerance(color) {
-  // write your code here & return value
+  const toleranceCodes = {
+    brown: 1,
+    red: 2,
+    green: 0.5,
+    blue: 0.25,
+    violet: 0.1,
+    grey: 0.05,
+    gold: 5,
+    silver: 10,
+  };
+  const tolerance = toleranceCodes[color];
+  return `\u00B1${tolerance}\u0025`;
 }
 
 /**
@@ -182,7 +237,16 @@ function getTolerance(color) {
  * must use functions in this file to build the string using a template literal
  */
 function getResistorOhms(bands) {
-  // write your code here & return value
+  const resistor = {};
+  const threeBandObj = {};
+  threeBandObj.color1 = bands.color1;
+  threeBandObj.color2 = bands.color2;
+  threeBandObj.multiplier = bands.multiplier;
+
+  resistor.threeBandColor = formatNumber(getThreeBandValue(threeBandObj));
+  resistor.tolerance = getTolerance(bands.tolerance);
+
+  return `Resistor value: ${resistor.threeBandColor} Ohms ${resistor.tolerance}`;
 }
 
 module.exports = {
